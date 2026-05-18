@@ -11,13 +11,13 @@ test.describe("File operations", () => {
 			await page.goto(`/${BUCKET}/files`);
 			await expect(page.locator(".q-table")).toBeVisible({ timeout: 10_000 });
 
-			// Open the New menu in sidebar
-			await page.getByRole("button", { name: "New" }).click();
-			await page.getByText("New Folder").click();
+			// Open the 新建 menu in sidebar
+			await page.getByRole("button", { name: "新建" }).click();
+			await page.getByText("新建文件夹").click();
 
 			// Fill in folder name — input is inside the dialog
 			await page.locator(".q-dialog input").fill("e2e-new-folder");
-			await page.getByRole("button", { name: "Create" }).click();
+			await page.getByRole("button", { name: "创建" }).click();
 
 			// Folder should appear in file list
 			await expect(page.locator("text=e2e-new-folder/")).toBeVisible({
@@ -35,11 +35,11 @@ test.describe("File operations", () => {
 			await page.goto(`/${BUCKET}/files`);
 			await expect(page.locator(".q-table")).toBeVisible({ timeout: 10_000 });
 
-			await page.getByRole("button", { name: "New" }).click();
-			await page.getByText("New File").click();
+			await page.getByRole("button", { name: "新建" }).click();
+			await page.getByText("新建文件").click();
 
 			await page.locator(".q-dialog input").fill("e2e-new-file.txt");
-			await page.getByRole("button", { name: "Create" }).click();
+			await page.getByRole("button", { name: "创建" }).click();
 
 			// File should appear in listing
 			await expect(page.locator("text=e2e-new-file.txt")).toBeVisible({
@@ -61,10 +61,10 @@ test.describe("File operations", () => {
 
 			// Right-click to open context menu
 			await page.locator("text=e2e-delete-me.txt").click({ button: "right" });
-			await page.locator(".q-menu").getByText("Delete").click();
+			await page.locator(".q-menu").getByText("删除").click();
 
 			// Confirm deletion in dialog
-			await page.locator(".q-dialog").getByRole("button", { name: "Delete" }).click();
+			await page.locator(".q-dialog").getByRole("button", { name: "删除" }).click();
 
 			// Wait for dialog to close
 			await expect(page.locator(".q-dialog")).not.toBeVisible({ timeout: 5_000 });
@@ -93,13 +93,13 @@ test.describe("File operations", () => {
 			});
 
 			await page.locator("text=e2e-old-name.txt").click({ button: "right" });
-			await page.getByText("Rename").click();
+			await page.getByText("重命名").click();
 
 			// Clear and type new name — input inside dialog
 			const input = page.locator(".q-dialog input");
 			await input.clear();
 			await input.fill("e2e-new-name.txt");
-			await page.getByRole("button", { name: "Rename" }).click();
+			await page.getByRole("button", { name: "重命名" }).click();
 
 			// New name should appear, old should disappear
 			await expect(page.locator("text=e2e-new-name.txt")).toBeVisible({
@@ -126,7 +126,7 @@ test.describe("File operations", () => {
 			});
 
 			await page.locator("text=e2e-copy-source.txt").click({ button: "right" });
-			await page.locator(".q-menu").getByText("Duplicate").click();
+			await page.locator(".q-menu").getByText("创建副本").click();
 
 			// Copy should appear in listing, original should still be there
 			await expect(page.locator("text=e2e-copy-source (copy).txt")).toBeVisible({
@@ -148,8 +148,8 @@ test.describe("File operations", () => {
 			});
 
 			await page.locator("text=e2e-delete-folder/").click({ button: "right" });
-			await page.locator(".q-menu").getByText("Delete").click();
-			await page.locator(".q-dialog").getByRole("button", { name: "Delete" }).click();
+			await page.locator(".q-menu").getByText("删除").click();
+			await page.locator(".q-dialog").getByRole("button", { name: "删除" }).click();
 
 			// Wait for dialog to close
 			await expect(page.locator(".q-dialog")).not.toBeVisible({ timeout: 5_000 });

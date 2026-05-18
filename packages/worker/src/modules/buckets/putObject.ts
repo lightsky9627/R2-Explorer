@@ -1,6 +1,7 @@
 import { OpenAPIRoute } from "chanfana";
 import { HTTPException } from "hono/http-exception";
 import { z } from "zod";
+import { normalizeHttpMetadata } from "../../foundation/httpMetadata";
 import type { AppContext } from "../../types";
 
 export class PutObject extends OpenAPIRoute {
@@ -80,7 +81,7 @@ export class PutObject extends OpenAPIRoute {
 
 		return await bucket.put(key, c.req.raw.body, {
 			customMetadata: customMetadata,
-			httpMetadata: httpMetadata,
+			httpMetadata: normalizeHttpMetadata(httpMetadata),
 		});
 	}
 }

@@ -13,8 +13,8 @@ test.describe("App loads", () => {
 		});
 
 		// Sidebar navigation buttons should be visible
-		await expect(page.getByRole("button", { name: "Files" })).toBeVisible();
-		await expect(page.getByRole("button", { name: "Info" })).toBeVisible();
+		await expect(page.getByRole("button", { name: "文件" })).toBeVisible();
+		await expect(page.getByRole("button", { name: "关于" })).toBeVisible();
 	});
 
 	test("shows the file table when navigating to a bucket", async ({

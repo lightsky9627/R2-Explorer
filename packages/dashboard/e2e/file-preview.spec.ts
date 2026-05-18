@@ -144,8 +144,8 @@ test.describe("File editing", () => {
 			timeout: 10_000,
 		});
 
-		// Click edit button (lowercase label "edit")
-		await page.locator(".q-dialog").getByRole("button", { name: "edit" }).click();
+		// Click 编辑 button
+		await page.locator(".q-dialog").getByRole("button", { name: "编辑" }).click();
 
 		// Textarea should appear — fill with new content
 		const textarea = page.locator(".q-dialog textarea");
@@ -153,7 +153,7 @@ test.describe("File editing", () => {
 		await textarea.fill("updated content");
 
 		// Save
-		await page.locator(".q-dialog").getByRole("button", { name: "Save" }).click();
+		await page.locator(".q-dialog").getByRole("button", { name: "保存" }).click();
 
 		// After save, preview should reload with updated content
 		await expect(page.locator("text=updated content")).toBeVisible({
@@ -173,13 +173,13 @@ test.describe("File editing", () => {
 		});
 
 		// Enter edit mode
-		await page.locator(".q-dialog").getByRole("button", { name: "edit" }).click();
+		await page.locator(".q-dialog").getByRole("button", { name: "编辑" }).click();
 		const textarea = page.locator(".q-dialog textarea");
 		await expect(textarea).toBeVisible({ timeout: 5_000 });
 		await textarea.fill("should not be saved");
 
 		// Cancel edit
-		await page.locator(".q-dialog").getByRole("button", { name: "Cancel" }).click();
+		await page.locator(".q-dialog").getByRole("button", { name: "取消" }).click();
 
 		// Original content should still be displayed (not the unsaved edit)
 		await expect(page.locator("text=original content")).toBeVisible({

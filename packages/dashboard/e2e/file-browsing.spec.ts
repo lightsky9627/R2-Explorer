@@ -20,9 +20,9 @@ test.describe("File browsing", () => {
 		await page.goto(`/${BUCKET}/files`);
 		await expect(page.locator(".q-table")).toBeVisible({ timeout: 10_000 });
 
-		await expect(page.locator("text=Name")).toBeVisible();
-		await expect(page.locator("text=Last Modified")).toBeVisible();
-		await expect(page.locator("text=Size")).toBeVisible();
+		await expect(page.locator("text=名称")).toBeVisible();
+		await expect(page.locator("text=修改时间")).toBeVisible();
+		await expect(page.locator("text=大小")).toBeVisible();
 	});
 });
 
@@ -59,8 +59,8 @@ test.describe("Sorting", () => {
 			timeout: 10_000,
 		});
 
-		// Click Name header to toggle sort direction
-		await page.locator("th:has-text('Name')").click();
+		// Click 名称 header to toggle sort direction
+		await page.locator("th:has-text('名称')").click();
 
 		// After clicking, files should still be visible
 		await expect(page.locator("text=e2e-sort-aaa.txt")).toBeVisible();

@@ -19,6 +19,7 @@
 		"axios": "^1.2.1",
 		"fflate": "^0.8.1",
 		"html-to-text": "^9.0.5",
+		"marked": "^18.0.3",
 		"pdfjs-dist": "2.5.207",
 		"pdfvuer": "^2.0.1",
 		"pinia": "^2.0.11",

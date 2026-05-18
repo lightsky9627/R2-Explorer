@@ -11,7 +11,7 @@ describe("LeftSidebar", () => {
 		} as Response);
 	});
 
-	it("shows 'Read only' label when apiReadonly is true", async () => {
+	it("shows '只读' label when apiReadonly is true", async () => {
 		const wrapper = await mountWithContext(LeftSidebar, {
 			initialRoute: "/my-bucket/files",
 		});
@@ -19,10 +19,10 @@ describe("LeftSidebar", () => {
 		store.apiReadonly = true;
 		await wrapper.vm.$nextTick();
 
-		expect(wrapper.text()).toContain("Read only");
+		expect(wrapper.text()).toContain("只读");
 	});
 
-	it("shows 'New' label when not readonly", async () => {
+	it("shows '新建' label when not readonly", async () => {
 		const wrapper = await mountWithContext(LeftSidebar, {
 			initialRoute: "/my-bucket/files",
 		});
@@ -30,10 +30,10 @@ describe("LeftSidebar", () => {
 		store.apiReadonly = false;
 		await wrapper.vm.$nextTick();
 
-		expect(wrapper.text()).toContain("New");
+		expect(wrapper.text()).toContain("新建");
 	});
 
-	it("hides 'New' when readonly", async () => {
+	it("hides '新建' when readonly", async () => {
 		const wrapper = await mountWithContext(LeftSidebar, {
 			initialRoute: "/my-bucket/files",
 		});
@@ -42,19 +42,19 @@ describe("LeftSidebar", () => {
 		await wrapper.vm.$nextTick();
 
 		const btns = wrapper.findAllComponents({ name: "QBtn" });
-		const newBtn = btns.find((b) => b.props("label") === "New");
+		const newBtn = btns.find((b) => b.props("label") === "新建");
 		expect(newBtn).toBeUndefined();
 	});
 
-	it("shows Files button", async () => {
+	it("shows 文件 button", async () => {
 		const wrapper = await mountWithContext(LeftSidebar, {
 			initialRoute: "/my-bucket/files",
 		});
 
-		expect(wrapper.text()).toContain("Files");
+		expect(wrapper.text()).toContain("文件");
 	});
 
-	it("shows Email nav when emailRouting is enabled", async () => {
+	it("shows 邮件 nav when emailRouting is enabled", async () => {
 		const wrapper = await mountWithContext(LeftSidebar, {
 			initialRoute: "/my-bucket/files",
 		});
@@ -62,10 +62,10 @@ describe("LeftSidebar", () => {
 		store.config = { emailRouting: true } as any;
 		await wrapper.vm.$nextTick();
 
-		expect(wrapper.text()).toContain("Email");
+		expect(wrapper.text()).toContain("邮件");
 	});
 
-	it("hides Email nav when emailRouting is false", async () => {
+	it("hides 邮件 nav when emailRouting is false", async () => {
 		const wrapper = await mountWithContext(LeftSidebar, {
 			initialRoute: "/my-bucket/files",
 		});
@@ -73,15 +73,15 @@ describe("LeftSidebar", () => {
 		store.config = { emailRouting: false } as any;
 		await wrapper.vm.$nextTick();
 
-		expect(wrapper.text()).not.toContain("Email");
+		expect(wrapper.text()).not.toContain("邮件");
 	});
 
-	it("shows Info button", async () => {
+	it("shows 关于 button", async () => {
 		const wrapper = await mountWithContext(LeftSidebar, {
 			initialRoute: "/my-bucket/files",
 		});
 
-		expect(wrapper.text()).toContain("Info");
+		expect(wrapper.text()).toContain("关于");
 	});
 
 	describe("isUpdateAvailable", () => {
