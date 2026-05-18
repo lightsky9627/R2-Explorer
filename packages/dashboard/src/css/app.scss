@@ -1,36 +1,43 @@
 // Vercel-inspired global styles.
-// We layer over Quasar's default classes rather than overriding components
-// directly, so the existing markup keeps rendering — just cleaner.
-
-@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap");
+// Layers over Quasar so the existing markup keeps rendering — just cleaner.
+// Inter font is bundled locally via boot/fonts.js (CDN can be slow in CN).
 
 :root {
   --r2-bg: #ffffff;
   --r2-bg-muted: #fafafa;
-  --r2-bg-subtle: #f5f5f5;
-  --r2-bg-hover: #f3f3f3;
+  --r2-bg-subtle: #f4f4f5;
+  --r2-bg-hover: #f4f4f5;
   --r2-border: #eaeaea;
   --r2-border-strong: #d4d4d4;
   --r2-text: #0a0a0a;
   --r2-text-secondary: #666666;
   --r2-text-tertiary: #999999;
   --r2-accent: #0070f3;
+  --r2-danger: #e00;
+  --r2-success: #0f9d58;
+  --r2-radius-sm: 4px;
   --r2-radius: 6px;
+  --r2-radius-lg: 8px;
   --r2-shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.04);
   --r2-shadow-md: 0 4px 12px rgba(0, 0, 0, 0.06);
+  --r2-shadow-lg: 0 8px 30px rgba(0, 0, 0, 0.08);
+  --r2-font: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", "Helvetica Neue",
+    "PingFang SC", "Microsoft YaHei", sans-serif;
 }
 
 html,
 body,
 #q-app {
-  font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", "Helvetica Neue",
-    "PingFang SC", "Microsoft YaHei", sans-serif;
+  font-family: var(--r2-font);
+  font-feature-settings: "ss01", "cv11";
   background-color: var(--r2-bg);
   color: var(--r2-text);
   -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  letter-spacing: -0.011em;
 }
 
-// --- Original .bg-green helper retained for legacy classes ---
+// Reset legacy classes that shipped with the old theme
 .bg-green {
   background-color: #0a0a0a !important;
   color: #fff !important;
@@ -57,7 +64,6 @@ $lg-breakpoint: 1920px;
     max-width: 540px;
   }
 }
-
 @media (min-width: $sm-breakpoint) {
   .container,
   .container-sm,
@@ -65,7 +71,6 @@ $lg-breakpoint: 1920px;
     max-width: 920px;
   }
 }
-
 @media (min-width: $md-breakpoint) {
   .container,
   .container-sm,
@@ -74,7 +79,6 @@ $lg-breakpoint: 1920px;
     max-width: 1140px;
   }
 }
-
 @media (min-width: $lg-breakpoint) {
   .container,
   .container-sm,
@@ -85,7 +89,7 @@ $lg-breakpoint: 1920px;
   }
 }
 
-// --- Vercel-style toolbar / header ---
+// --- Header / Toolbar ---
 .q-header {
   background-color: var(--r2-bg) !important;
   color: var(--r2-text) !important;
@@ -94,12 +98,24 @@ $lg-breakpoint: 1920px;
 }
 
 .q-toolbar {
-  min-height: 56px;
+  min-height: 52px;
+  padding: 0 16px;
 
   .q-toolbar__title {
     font-weight: 600;
-    font-size: 16px;
-    letter-spacing: -0.01em;
+    font-size: 15px;
+    letter-spacing: -0.015em;
+    padding-left: 8px;
+  }
+
+  // Strip the round avatar background so only the logo SVG shows
+  .q-avatar {
+    background: transparent !important;
+    width: 24px;
+    height: 24px;
+    min-width: 24px;
+    min-height: 24px;
+    font-size: 24px;
   }
 }
 
@@ -111,32 +127,58 @@ $lg-breakpoint: 1920px;
 
 // --- Cards / dialogs ---
 .q-card {
-  border-radius: var(--r2-radius);
+  border-radius: var(--r2-radius-lg);
   box-shadow: var(--r2-shadow-sm);
   border: 1px solid var(--r2-border);
+  background-color: var(--r2-bg);
 }
 
-.q-dialog .q-card {
-  box-shadow: var(--r2-shadow-md);
+.q-dialog__inner > .q-card {
+  box-shadow: var(--r2-shadow-lg);
+}
+
+// Dialog headers — looser, cleaner
+.q-card__section--vert {
+  padding: 20px 24px;
 }
 
 // --- Tables ---
+.q-table__container {
+  box-shadow: none;
+  border: 1px solid var(--r2-border);
+  border-radius: var(--r2-radius-lg);
+}
+
 .q-table {
+  background-color: var(--r2-bg);
+
+  thead tr {
+    background-color: var(--r2-bg-muted);
+  }
+
   th {
-    font-weight: 600;
+    font-weight: 500;
     color: var(--r2-text-secondary);
     font-size: 12px;
-    text-transform: uppercase;
-    letter-spacing: 0.04em;
+    letter-spacing: 0.02em;
     border-bottom: 1px solid var(--r2-border) !important;
+    height: 40px;
   }
 
   td {
     border-bottom: 1px solid var(--r2-border) !important;
+    color: var(--r2-text);
+    font-size: 14px;
   }
 
+  tbody tr {
+    transition: background-color 0.12s ease;
+  }
   tbody tr:hover {
     background-color: var(--r2-bg-hover) !important;
+  }
+  tbody tr:last-child td {
+    border-bottom: 0 !important;
   }
 }
 
@@ -146,14 +188,38 @@ $lg-breakpoint: 1920px;
   text-transform: none;
   font-weight: 500;
   letter-spacing: 0;
+  font-size: 14px;
+  box-shadow: none !important;
+
+  // Suppress Material ripple visual a bit
+  .q-focus-helper {
+    opacity: 0.04;
+  }
+}
+
+.q-btn--flat,
+.q-btn--outline {
+  background: transparent;
+}
+
+.q-btn--standard {
+  background-color: var(--r2-text);
+  color: var(--r2-bg);
 }
 
 // --- Inputs ---
+.q-field--outlined .q-field__control {
+  border-radius: var(--r2-radius);
+}
 .q-field--outlined .q-field__control:before {
   border-color: var(--r2-border);
 }
 .q-field--outlined .q-field__control:hover:before {
   border-color: var(--r2-border-strong);
+}
+.q-field--outlined.q-field--focused .q-field__control:after {
+  border-color: var(--r2-text);
+  border-width: 1px;
 }
 
 // --- Breadcrumbs ---
@@ -161,57 +227,128 @@ $lg-breakpoint: 1920px;
   font-size: 14px;
   color: var(--r2-text-secondary);
 
-  a,
   .q-breadcrumbs__el {
     color: var(--r2-text-secondary);
-    transition: color 0.15s ease;
+    transition: color 0.12s ease;
   }
-  a:hover,
-  .q-breadcrumbs__el:hover {
+  .q-breadcrumbs__el:hover,
+  .q-breadcrumbs__el--last {
     color: var(--r2-text);
+  }
+  .q-breadcrumbs__separator {
+    color: var(--r2-text-tertiary);
+    margin: 0 4px;
   }
 }
 
-// --- Sidebar buttons (LeftSidebar) ---
+// --- LeftSidebar buttons ---
+// The sidebar uses stack buttons (icon over label). Tame them into ghost cards.
 .q-drawer .q-btn--stack {
   font-size: 11px;
   letter-spacing: 0;
-  background-color: var(--r2-bg);
+  background-color: var(--r2-bg) !important;
   color: var(--r2-text) !important;
   border: 1px solid var(--r2-border);
   box-shadow: none !important;
   text-shadow: none !important;
+  border-radius: var(--r2-radius);
+  padding: 10px 6px;
+  min-height: 64px;
+  transition: background-color 0.12s ease, border-color 0.12s ease;
+
+  .q-icon {
+    color: var(--r2-text) !important;
+    font-size: 22px;
+  }
 
   &:hover {
+    background-color: var(--r2-bg-hover) !important;
     border-color: var(--r2-border-strong);
-    background-color: var(--r2-bg-hover);
   }
 
-  // Stack icons no longer get coloured backgrounds — keep them mono
-  .q-icon {
-    color: var(--r2-text);
+  // Active / colored variants
+  &.bg-green,
+  &.bg-primary {
+    background-color: var(--r2-text) !important;
+    color: var(--r2-bg) !important;
+    border-color: var(--r2-text);
+    .q-icon {
+      color: var(--r2-bg) !important;
+    }
+    &:hover {
+      background-color: #333 !important;
+      border-color: #333;
+    }
+  }
+
+  &.bg-red {
+    background-color: #fef2f2 !important;
+    color: var(--r2-danger) !important;
+    border-color: #fecaca;
+    .q-icon {
+      color: var(--r2-danger) !important;
+    }
+  }
+
+  &.bg-blue {
+    background-color: var(--r2-bg) !important;
+    color: var(--r2-text) !important;
+    .q-icon {
+      color: var(--r2-text) !important;
+    }
+  }
+  &.bg-secondary {
+    background-color: var(--r2-bg) !important;
+    color: var(--r2-text-secondary) !important;
+    .q-icon {
+      color: var(--r2-text-secondary) !important;
+    }
   }
 }
 
-// Restore some accent for the "New" CTA
-.q-drawer .q-btn--stack.bg-green,
-.q-drawer .q-btn--stack.bg-primary {
-  background-color: var(--r2-text) !important;
-  color: var(--r2-bg) !important;
-  border-color: var(--r2-text);
-
-  .q-icon {
-    color: var(--r2-bg);
-  }
+// --- Menus / popovers ---
+.q-menu {
+  border-radius: var(--r2-radius);
+  border: 1px solid var(--r2-border);
+  box-shadow: var(--r2-shadow-md);
 }
 
-.q-drawer .q-btn--stack.bg-red {
-  background-color: #fff5f5 !important;
-  color: #c00 !important;
-  border-color: #fcc;
-  .q-icon {
-    color: #c00;
-  }
+.q-list .q-item {
+  min-height: 36px;
+  font-size: 14px;
+  border-radius: var(--r2-radius-sm);
+}
+.q-list .q-item:hover {
+  background-color: var(--r2-bg-hover);
+}
+.q-list .q-item__label--caption {
+  color: var(--r2-text-tertiary);
+  font-size: 12px;
+}
+
+// --- Notifications ---
+.q-notification {
+  border-radius: var(--r2-radius);
+  font-family: var(--r2-font);
+  box-shadow: var(--r2-shadow-md);
+}
+
+// --- Chips ---
+.q-chip {
+  border-radius: 999px;
+  font-weight: 500;
+  height: 22px;
+  font-size: 12px;
+}
+
+// --- Spinners (default accent) ---
+.q-spinner {
+  color: var(--r2-text-secondary);
+}
+
+// --- Selection highlight ---
+::selection {
+  background-color: rgba(0, 112, 243, 0.18);
 }
 
 // --- GitHub-style markdown rendering ---
@@ -219,6 +356,7 @@ $lg-breakpoint: 1920px;
   color: var(--r2-text);
   line-height: 1.7;
   font-size: 15px;
+  font-family: var(--r2-font);
 
   h1,
   h2,
@@ -230,7 +368,7 @@ $lg-breakpoint: 1920px;
     margin-bottom: 0.6em;
     font-weight: 600;
     line-height: 1.25;
-    letter-spacing: -0.01em;
+    letter-spacing: -0.015em;
   }
   h1 {
     font-size: 2em;
