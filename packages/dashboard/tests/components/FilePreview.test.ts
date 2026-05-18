@@ -113,11 +113,10 @@ describe("FilePreview", () => {
 			});
 		});
 
-		it("returns unknown for unrecognized extensions", () => {
-			expect(wrapper.vm.getType("archive.tar.bz2")).toEqual({
-				type: "unknown",
-				downloadType: "text",
-			});
+		it("returns null for unrecognized extensions", () => {
+			expect(wrapper.vm.getType("archive.tar.bz2")).toBeNull();
+			expect(wrapper.vm.getType("installer.exe")).toBeNull();
+			expect(wrapper.vm.getType("music.flac")).toBeNull();
 		});
 
 		it("is case-insensitive", () => {

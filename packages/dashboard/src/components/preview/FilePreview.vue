@@ -159,19 +159,33 @@ export default {
 		fileData: undefined,
 		fileDataEdited: undefined,
 
+		// Whitelist of previewable file types. Unknown extensions are NOT
+		// opened as text — silently treating binaries like .exe / .flac as
+		// text would download the whole binary and freeze the page when
+		// rendered via v-html.
 		previewConfig: [
 			{
-				extensions: ["png", "jpg", "jpeg", "webp", "avif"],
+				extensions: [
+					"png",
+					"jpg",
+					"jpeg",
+					"webp",
+					"avif",
+					"gif",
+					"svg",
+					"bmp",
+					"ico",
+				],
 				type: "image",
 				downloadType: "objectUrl",
 			},
 			{
-				extensions: ["mp3"],
+				extensions: ["mp3", "wav", "m4a", "aac"],
 				type: "audio",
 				downloadType: "objectUrl",
 			},
 			{
-				extensions: ["mp4", "ogg"],
+				extensions: ["mp4", "ogg", "webm", "mov"],
 				type: "video",
 				downloadType: "objectUrl",
 			},
@@ -181,12 +195,58 @@ export default {
 				downloadType: "objectUrl",
 			},
 			{
-				extensions: ["txt"],
+				// Common text + code/config extensions all share the text renderer.
+				// Capped at 10MB in openFile to avoid DOM blowups.
+				extensions: [
+					"txt",
+					"log",
+					"ini",
+					"conf",
+					"env",
+					"yaml",
+					"yml",
+					"toml",
+					"xml",
+					"js",
+					"mjs",
+					"cjs",
+					"ts",
+					"tsx",
+					"jsx",
+					"vue",
+					"py",
+					"rb",
+					"go",
+					"java",
+					"c",
+					"h",
+					"cpp",
+					"hpp",
+					"cs",
+					"swift",
+					"kt",
+					"rs",
+					"php",
+					"sql",
+					"css",
+					"scss",
+					"sass",
+					"less",
+					"lua",
+					"pl",
+					"sh",
+					"bash",
+					"zsh",
+					"fish",
+					"ps1",
+					"bat",
+					"cmd",
+				],
 				type: "text",
 				downloadType: "text",
 			},
 			{
-				extensions: ["md"],
+				extensions: ["md", "markdown"],
 				type: "markdown",
 				downloadType: "text",
 			},
@@ -201,7 +261,7 @@ export default {
 				downloadType: "text",
 			},
 			{
-				extensions: ["html"],
+				extensions: ["html", "htm"],
 				type: "html",
 				downloadType: "text",
 			},
@@ -216,42 +276,52 @@ export default {
 				downloadType: "text",
 			},
 		],
+		// Text-y previews are downloaded as a single string and stuffed into
+		// the DOM — cap them tighter to avoid the page hanging.
+		textLikeTypes: new Set([
+			"text",
+			"markdown",
+			"csv",
+			"json",
+			"html",
+			"email",
+		]),
 	}),
 	methods: {
 		getType(filename) {
+			const lower = filename.toLowerCase();
 			for (const config of this.previewConfig) {
 				for (const extension of config.extensions) {
-					if (filename.toLowerCase().endsWith(extension)) {
+					if (lower.endsWith(`.${extension}`)) {
 						return { type: config.type, downloadType: config.downloadType };
 					}
 				}
 			}
-
-			// Open unknown files as text
-			return {
-				type: "unknown",
-				downloadType: "text",
-			};
+			return null;
 		},
 		async openFile(file) {
-			if (bytesToMegabytes(file.size) > 200) {
-				this.q.notify({
-					message: "文件过大，无法预览",
-					color: "orange",
-				});
+			const previewConfig = this.getType(file.name);
 
+			if (!previewConfig) {
+				const ext = file.name.includes(".")
+					? file.name.split(".").pop().toLowerCase()
+					: "未知";
+				this.q.notify({
+					message: `不支持预览 .${ext} 文件，请右键下载`,
+					color: "orange",
+					timeout: 4000,
+				});
 				return;
 			}
 
-			const previewConfig = this.getType(file.name);
-			// if (previewConfig === undefined) {
-			//   this.q.notify({
-			//     message: "File preview is not supported.",
-			//     color: "orange"
-			//   });
-			//
-			//   return;
-			// }
+			const maxSizeMb = this.textLikeTypes.has(previewConfig.type) ? 10 : 200;
+			if (bytesToMegabytes(file.size) > maxSizeMb) {
+				this.q.notify({
+					message: `文件过大，无法预览（限制 ${maxSizeMb}MB）`,
+					color: "orange",
+				});
+				return;
+			}
 
 			this.abortControl = new AbortController();
 
