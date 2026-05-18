@@ -11,11 +11,11 @@
         <div>{{ filename }}</div>
 
         <template v-if="editMode">
-          <q-btn icon="delete" label="Cancel" size="md" class="q-ml-md" color="red" dense @click="cancelEdit" />
-          <q-btn icon="save" label="Save" size="md" class="q-ml-md" color="green" dense @click="saveEdit" />
+          <q-btn icon="delete" label="取消" size="md" class="q-ml-md" color="red" dense @click="cancelEdit" />
+          <q-btn icon="save" label="保存" size="md" class="q-ml-md" color="green" dense @click="saveEdit" />
         </template>
         <template v-else>
-          <q-btn icon="edit" label="edit" size="md" class="q-ml-md" color="orange" dense @click="enableEdit" />
+          <q-btn icon="edit" label="编辑" size="md" class="q-ml-md" color="orange" dense @click="enableEdit" />
         </template>
 
         <q-space />
@@ -42,7 +42,7 @@
             <div class="flex column" style="height: 100%">
               <q-card class="bg-orange-2" flat square>
                 <q-card-section>
-                  File editing is still in tests!
+                  文件编辑功能仍处于测试阶段！
                 </q-card-section>
               </q-card>
               <div class="file-edit">
@@ -68,7 +68,7 @@
             <div class="text-center">
               <audio controls>
                 <source :src="fileData">
-                Your browser does not support the audio element.
+                当前浏览器不支持音频播放。
               </audio>
             </div>
           </template>
@@ -77,7 +77,7 @@
             <div class="text-center">
               <video controls style="max-width: 100%; height: auto">
                 <source :src="fileData">
-                Your browser does not support the video tag.
+                当前浏览器不支持视频播放。
               </video>
             </div>
           </template>
@@ -114,7 +114,7 @@
             <div class="flex column" style="height: 100%; flex-wrap: nowrap; max-width: 100%; line-break: anywhere;">
               <q-card class="bg-orange-2" flat square>
                 <q-card-section>
-                  This in a unknown file type, opening as text.
+                  未识别的文件类型，已按文本方式打开。
                 </q-card-section>
               </q-card>
               <div class="file-edit">
@@ -236,7 +236,7 @@ export default {
 		async openFile(file) {
 			if (bytesToMegabytes(file.size) > 200) {
 				this.q.notify({
-					message: "File is too big to preview.",
+					message: "文件过大，无法预览",
 					color: "orange",
 				});
 
@@ -337,7 +337,7 @@ export default {
 			let result = "";
 			const rows = text.split("\n");
 			if (rows.length === 0) {
-				return "<h2>Empty csv</h2>";
+				return "<h2>空的 CSV 文件</h2>";
 			}
 
 			for (const [index, row] of rows.entries()) {
@@ -392,7 +392,7 @@ export default {
 			if (!isValid) {
 				this.q.notify({
 					type: "negative",
-					message: `Content is not valid ${this.type}.`,
+					message: `内容不是有效的 ${this.type}`,
 				});
 				return;
 			}
@@ -400,7 +400,7 @@ export default {
 			const notif = this.q.notify({
 				group: false,
 				spinner: true,
-				message: "Updating file...",
+				message: "正在更新文件…",
 				caption: "0%",
 				timeout: 0,
 			});
@@ -426,7 +426,7 @@ export default {
 				icon: "done", // we add an icon
 				spinner: false, // we reset the spinner setting so the icon can be displayed
 				caption: "100%",
-				message: "File updated!",
+				message: "文件已更新！",
 				timeout: 5000, // we will timeout it in 5s
 			});
 

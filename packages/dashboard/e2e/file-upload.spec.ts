@@ -56,7 +56,7 @@ test.describe("File download", () => {
 		const downloadPromise = page.waitForEvent("download");
 
 		await page.locator("text=e2e-download-me.txt").click({ button: "right" });
-		await page.locator(".q-menu").getByText("Download").click();
+		await page.locator(".q-menu").getByText("下载").click();
 
 		// Verify download was triggered
 		const download = await downloadPromise;

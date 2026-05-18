@@ -21,7 +21,7 @@ test.describe("Search", () => {
 		});
 
 		// Type search prefix
-		const searchInput = page.locator('input[placeholder="Search by prefix..."]');
+		const searchInput = page.locator('input[placeholder="按前缀搜索…"]');
 		await searchInput.fill("e2e-search-b");
 		await searchInput.press("Enter");
 
@@ -44,7 +44,7 @@ test.describe("Search", () => {
 		});
 
 		// Search for beta
-		const searchInput = page.locator('input[placeholder="Search by prefix..."]');
+		const searchInput = page.locator('input[placeholder="按前缀搜索…"]');
 		await searchInput.fill("e2e-search-b");
 		await searchInput.press("Enter");
 		await expect(page.locator("text=e2e-search-beta.txt")).toBeVisible({

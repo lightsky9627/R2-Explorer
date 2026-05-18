@@ -126,14 +126,14 @@ test.describe("Email", () => {
 			page.locator("td.email-subject", { hasText: "Welcome to E2E Testing" }),
 		).toBeVisible({ timeout: 15_000 });
 
-		// Click Files button in sidebar
-		await page.getByRole("button", { name: "Files" }).click();
+		// Click 文件 button in sidebar
+		await page.getByRole("button", { name: "文件" }).click();
 
 		// Should be on the files page
 		await expect(page.locator(".q-table")).toBeVisible({ timeout: 10_000 });
 
-		// Click Email button to go back
-		await page.getByRole("button", { name: "Email" }).click();
+		// Click 邮件 button to go back
+		await page.getByRole("button", { name: "邮件" }).click();
 
 		// Should be back on email page
 		await expect(

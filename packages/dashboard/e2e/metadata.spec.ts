@@ -17,13 +17,13 @@ test.describe("Metadata", () => {
 		});
 
 		await page.locator("text=e2e-metadata.txt").click({ button: "right" });
-		await page.getByText("Update Metadata").click();
+		await page.getByText("编辑元数据").click();
 
 		// Metadata dialog should open with both sections
-		await expect(page.locator("text=HTTP Metadata")).toBeVisible({
+		await expect(page.locator("text=HTTP 元数据")).toBeVisible({
 			timeout: 5_000,
 		});
-		await expect(page.locator("text=Custom Metadata")).toBeVisible();
+		await expect(page.locator("text=自定义元数据")).toBeVisible();
 	});
 
 	test("adds custom metadata and saves", async ({ page }) => {
@@ -33,8 +33,8 @@ test.describe("Metadata", () => {
 		});
 
 		await page.locator("text=e2e-metadata.txt").click({ button: "right" });
-		await page.getByText("Update Metadata").click();
-		await expect(page.locator("text=Custom Metadata")).toBeVisible({
+		await page.getByText("编辑元数据").click();
+		await expect(page.locator("text=自定义元数据")).toBeVisible({
 			timeout: 5_000,
 		});
 
@@ -43,19 +43,19 @@ test.describe("Metadata", () => {
 		const addButtons = page.locator(".q-dialog .q-btn--round");
 		await addButtons.last().click();
 
-		// Fill in key and value — inputs have label="Key" and label="Value"
-		const keyInputs = page.locator('.q-dialog input[aria-label="Key"]');
-		const valueInputs = page.locator('.q-dialog input[aria-label="Value"]');
+		// Fill in key and value — inputs have label="键" / "值"
+		const keyInputs = page.locator('.q-dialog input[aria-label="键"]');
+		const valueInputs = page.locator('.q-dialog input[aria-label="值"]');
 		await keyInputs.last().fill("e2e-key");
 		await valueInputs.last().fill("e2e-value");
 
-		// Save via Update Metadata button
-		await page.getByRole("button", { name: "Update Metadata" }).click();
+		// Save via 更新元数据 button
+		await page.getByRole("button", { name: "更新元数据" }).click();
 
 		// Verify by reopening metadata dialog
 		await page.locator("text=e2e-metadata.txt").click({ button: "right" });
-		await page.getByText("Update Metadata").click();
-		await expect(page.locator("text=Custom Metadata")).toBeVisible({
+		await page.getByText("编辑元数据").click();
+		await expect(page.locator("text=自定义元数据")).toBeVisible({
 			timeout: 5_000,
 		});
 

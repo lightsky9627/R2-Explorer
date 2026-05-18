@@ -11,7 +11,7 @@
       :annotation="true"
       :resize="true"
     >
-      <template v-slot:loading> loading content here... </template>
+      <template v-slot:loading> 正在加载内容… </template>
     </pdf>
   </div>
 </template>

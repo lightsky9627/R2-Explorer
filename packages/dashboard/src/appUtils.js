@@ -85,16 +85,16 @@ export const timeSince = (date) => {
 	interval = seconds / 3600;
 	if (interval > 1) {
 		calc = Math.floor(interval);
-		return calc + (calc === 1 ? " hour" : " hours");
+		return `${calc} 小时前`;
 	}
 	interval = seconds / 60;
 	if (interval > 1) {
 		calc = Math.floor(interval);
-		return calc + (calc === 1 ? " minute" : " minutes");
+		return `${calc} 分钟前`;
 	}
 
 	calc = Math.floor(interval);
-	return calc + (calc === 1 ? " second" : " seconds");
+	return `${calc} 秒前`;
 };
 export const bytesToSize = (bytes) => {
 	const sizes = ["Bytes", "KB", "MB", "GB", "TB"];

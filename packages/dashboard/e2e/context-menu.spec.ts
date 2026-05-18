@@ -22,13 +22,13 @@ test.describe("Context menu", () => {
 
 		// File context menu should show all file-specific items (scoped to menu)
 		const menu = page.locator(".q-menu");
-		await expect(menu.getByText("Open")).toBeVisible();
-		await expect(menu.getByText("Download")).toBeVisible();
-		await expect(menu.getByText("Rename")).toBeVisible();
-		await expect(menu.getByText("Update Metadata")).toBeVisible();
-		await expect(menu.getByText("Create Share Link")).toBeVisible();
-		await expect(menu.getByText("Copy Internal Link")).toBeVisible();
-		await expect(menu.getByText("Delete")).toBeVisible();
+		await expect(menu.getByText("打开")).toBeVisible();
+		await expect(menu.getByText("下载")).toBeVisible();
+		await expect(menu.getByText("重命名")).toBeVisible();
+		await expect(menu.getByText("编辑元数据")).toBeVisible();
+		await expect(menu.getByText("创建分享链接")).toBeVisible();
+		await expect(menu.getByText("复制控制台链接")).toBeVisible();
+		await expect(menu.getByText("删除")).toBeVisible();
 	});
 
 	test("shows folder menu items on right-click (no Download/Rename)", async ({
@@ -44,13 +44,13 @@ test.describe("Context menu", () => {
 		const menu = page.locator(".q-menu");
 
 		// Folder-specific: should have Open and Delete
-		await expect(menu.getByText("Open")).toBeVisible();
-		await expect(menu.getByText("Delete")).toBeVisible();
+		await expect(menu.getByText("打开")).toBeVisible();
+		await expect(menu.getByText("删除")).toBeVisible();
 
 		// Should NOT have file-only items
-		await expect(menu.getByText("Download")).not.toBeVisible();
-		await expect(menu.getByText("Rename")).not.toBeVisible();
-		await expect(menu.getByText("Update Metadata")).not.toBeVisible();
+		await expect(menu.getByText("下载")).not.toBeVisible();
+		await expect(menu.getByText("重命名")).not.toBeVisible();
+		await expect(menu.getByText("编辑元数据")).not.toBeVisible();
 	});
 
 	test("opens file via context menu Open", async ({ page }) => {
@@ -60,7 +60,7 @@ test.describe("Context menu", () => {
 		});
 
 		await page.locator("text=e2e-ctx-file.txt").click({ button: "right" });
-		await page.locator(".q-menu").getByText("Open").click();
+		await page.locator(".q-menu").getByText("打开").click();
 
 		// File preview should open
 		await expect(page.locator("text=context menu test")).toBeVisible({
@@ -75,7 +75,7 @@ test.describe("Context menu", () => {
 		});
 
 		await page.locator("text=e2e-ctx-folder/").click({ button: "right" });
-		await page.locator(".q-menu").getByText("Open").click();
+		await page.locator(".q-menu").getByText("打开").click();
 
 		// Should navigate into the folder (URL changes)
 		await expect(page).toHaveURL(/\/files\//, { timeout: 5_000 });

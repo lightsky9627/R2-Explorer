@@ -20,13 +20,13 @@ test.describe("Share links", () => {
 		});
 
 		await page.locator("text=e2e-share-file.txt").click({ button: "right" });
-		await page.locator(".q-menu").getByText("Create Share Link").click();
+		await page.locator(".q-menu").getByText("创建分享链接").click();
 
 		// Share link dialog should open
-		await expect(page.locator("text=Share File")).toBeVisible({
+		await expect(page.locator("text=分享文件")).toBeVisible({
 			timeout: 5_000,
 		});
-		await expect(page.locator("text=Expires in")).toBeVisible();
+		await expect(page.locator("text=有效时长")).toBeVisible();
 	});
 
 	test("creates a share link and shows the URL", async ({ page }) => {
@@ -36,15 +36,15 @@ test.describe("Share links", () => {
 		});
 
 		await page.locator("text=e2e-share-file.txt").click({ button: "right" });
-		await page.locator(".q-menu").getByText("Create Share Link").click();
-		await expect(page.locator("text=Share File")).toBeVisible({
+		await page.locator(".q-menu").getByText("创建分享链接").click();
+		await expect(page.locator("text=分享文件")).toBeVisible({
 			timeout: 5_000,
 		});
 
-		await page.getByRole("button", { name: "Create Link" }).click();
+		await page.getByRole("button", { name: "生成链接" }).click();
 
 		await expect(
-			page.locator(".q-dialog").locator("text=Share Link Created!"),
+			page.locator(".q-dialog").locator("text=分享链接已生成"),
 		).toBeVisible({ timeout: 5_000 });
 	});
 
@@ -57,8 +57,8 @@ test.describe("Share links", () => {
 		});
 
 		await page.locator("text=e2e-share-file.txt").click({ button: "right" });
-		await page.locator(".q-menu").getByText("Create Share Link").click();
-		await expect(page.locator("text=Share File")).toBeVisible({
+		await page.locator(".q-menu").getByText("创建分享链接").click();
+		await expect(page.locator("text=分享文件")).toBeVisible({
 			timeout: 5_000,
 		});
 
@@ -78,11 +78,11 @@ test.describe("Share links", () => {
 		).last();
 		await maxDownloadsInput.fill("5");
 
-		await page.getByRole("button", { name: "Create Link" }).click();
+		await page.getByRole("button", { name: "生成链接" }).click();
 
 		// Share link should be created with URL shown
 		await expect(
-			page.locator(".q-dialog").locator("text=Share Link Created!"),
+			page.locator(".q-dialog").locator("text=分享链接已生成"),
 		).toBeVisible({ timeout: 5_000 });
 	});
 
@@ -90,10 +90,10 @@ test.describe("Share links", () => {
 		await page.goto(`/${BUCKET}/files`);
 		await expect(page.locator(".q-table")).toBeVisible({ timeout: 10_000 });
 
-		await page.getByRole("button", { name: "Manage Shares" }).click();
+		await page.getByRole("button", { name: "分享管理" }).click();
 
 		await expect(
-			page.locator("text=Manage Share Links"),
+			page.locator("text=分享链接管理"),
 		).toBeVisible({ timeout: 5_000 });
 	});
 
@@ -105,24 +105,24 @@ test.describe("Share links", () => {
 
 		// Create a share link first so there's something to show
 		await page.locator("text=e2e-share-file.txt").click({ button: "right" });
-		await page.locator(".q-menu").getByText("Create Share Link").click();
-		await expect(page.locator("text=Share File")).toBeVisible({
+		await page.locator(".q-menu").getByText("创建分享链接").click();
+		await expect(page.locator("text=分享文件")).toBeVisible({
 			timeout: 5_000,
 		});
-		await page.getByRole("button", { name: "Create Link" }).click();
+		await page.getByRole("button", { name: "生成链接" }).click();
 		await expect(
-			page.locator(".q-dialog").locator("text=Share Link Created!"),
+			page.locator(".q-dialog").locator("text=分享链接已生成"),
 		).toBeVisible({ timeout: 5_000 });
 
 		// Close the create dialog
-		await page.getByRole("button", { name: "Close" }).click();
+		await page.getByRole("button", { name: "关闭" }).click();
 		await expect(page.locator(".q-dialog")).not.toBeVisible({
 			timeout: 3_000,
 		});
 
 		// Open manage shares
-		await page.getByRole("button", { name: "Manage Shares" }).click();
-		await expect(page.locator("text=Manage Share Links")).toBeVisible({
+		await page.getByRole("button", { name: "分享管理" }).click();
+		await expect(page.locator("text=分享链接管理")).toBeVisible({
 			timeout: 5_000,
 		});
 
@@ -131,9 +131,9 @@ test.describe("Share links", () => {
 			page.locator(".q-dialog").locator("text=e2e-share-file.txt").first(),
 		).toBeVisible({ timeout: 5_000 });
 
-		// Should show Active status
+		// Should show 有效 status
 		await expect(
-			page.locator(".q-dialog").locator("text=Active").first(),
+			page.locator(".q-dialog").locator("text=有效").first(),
 		).toBeVisible();
 	});
 
@@ -145,24 +145,24 @@ test.describe("Share links", () => {
 		});
 
 		await page.locator("text=e2e-share-file.txt").click({ button: "right" });
-		await page.locator(".q-menu").getByText("Create Share Link").click();
-		await expect(page.locator("text=Share File")).toBeVisible({
+		await page.locator(".q-menu").getByText("创建分享链接").click();
+		await expect(page.locator("text=分享文件")).toBeVisible({
 			timeout: 5_000,
 		});
-		await page.getByRole("button", { name: "Create Link" }).click();
+		await page.getByRole("button", { name: "生成链接" }).click();
 		await expect(
-			page.locator(".q-dialog").locator("text=Share Link Created!"),
+			page.locator(".q-dialog").locator("text=分享链接已生成"),
 		).toBeVisible({ timeout: 5_000 });
 
 		// Close the create dialog
-		await page.getByRole("button", { name: "Close" }).click();
-		await expect(page.locator("text=Share File")).not.toBeVisible({
+		await page.getByRole("button", { name: "关闭" }).click();
+		await expect(page.locator("text=分享文件")).not.toBeVisible({
 			timeout: 3_000,
 		});
 
 		// Open manage shares
-		await page.getByRole("button", { name: "Manage Shares" }).click();
-		await expect(page.locator("text=Manage Share Links")).toBeVisible({
+		await page.getByRole("button", { name: "分享管理" }).click();
+		await expect(page.locator("text=分享链接管理")).toBeVisible({
 			timeout: 5_000,
 		});
 

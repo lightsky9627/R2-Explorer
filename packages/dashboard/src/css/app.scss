@@ -1,6 +1,39 @@
-// app global css in SCSS form
+// Vercel-inspired global styles.
+// We layer over Quasar's default classes rather than overriding components
+// directly, so the existing markup keeps rendering — just cleaner.
+
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap");
+
+:root {
+  --r2-bg: #ffffff;
+  --r2-bg-muted: #fafafa;
+  --r2-bg-subtle: #f5f5f5;
+  --r2-bg-hover: #f3f3f3;
+  --r2-border: #eaeaea;
+  --r2-border-strong: #d4d4d4;
+  --r2-text: #0a0a0a;
+  --r2-text-secondary: #666666;
+  --r2-text-tertiary: #999999;
+  --r2-accent: #0070f3;
+  --r2-radius: 6px;
+  --r2-shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.04);
+  --r2-shadow-md: 0 4px 12px rgba(0, 0, 0, 0.06);
+}
+
+html,
+body,
+#q-app {
+  font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", "Helvetica Neue",
+    "PingFang SC", "Microsoft YaHei", sans-serif;
+  background-color: var(--r2-bg);
+  color: var(--r2-text);
+  -webkit-font-smoothing: antialiased;
+}
+
+// --- Original .bg-green helper retained for legacy classes ---
 .bg-green {
-  background-color: #4CAE4F;
+  background-color: #0a0a0a !important;
+  color: #fff !important;
 }
 
 $xs-breakpoint: 718px;
@@ -49,5 +82,256 @@ $lg-breakpoint: 1920px;
   .container-lg,
   .container-xl {
     max-width: 1440px;
+  }
+}
+
+// --- Vercel-style toolbar / header ---
+.q-header {
+  background-color: var(--r2-bg) !important;
+  color: var(--r2-text) !important;
+  border-bottom: 1px solid var(--r2-border);
+  box-shadow: none !important;
+}
+
+.q-toolbar {
+  min-height: 56px;
+
+  .q-toolbar__title {
+    font-weight: 600;
+    font-size: 16px;
+    letter-spacing: -0.01em;
+  }
+}
+
+// --- Drawers ---
+.q-drawer {
+  background-color: var(--r2-bg-muted) !important;
+  border-right: 1px solid var(--r2-border) !important;
+}
+
+// --- Cards / dialogs ---
+.q-card {
+  border-radius: var(--r2-radius);
+  box-shadow: var(--r2-shadow-sm);
+  border: 1px solid var(--r2-border);
+}
+
+.q-dialog .q-card {
+  box-shadow: var(--r2-shadow-md);
+}
+
+// --- Tables ---
+.q-table {
+  th {
+    font-weight: 600;
+    color: var(--r2-text-secondary);
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    border-bottom: 1px solid var(--r2-border) !important;
+  }
+
+  td {
+    border-bottom: 1px solid var(--r2-border) !important;
+  }
+
+  tbody tr:hover {
+    background-color: var(--r2-bg-hover) !important;
+  }
+}
+
+// --- Buttons ---
+.q-btn {
+  border-radius: var(--r2-radius);
+  text-transform: none;
+  font-weight: 500;
+  letter-spacing: 0;
+}
+
+// --- Inputs ---
+.q-field--outlined .q-field__control:before {
+  border-color: var(--r2-border);
+}
+.q-field--outlined .q-field__control:hover:before {
+  border-color: var(--r2-border-strong);
+}
+
+// --- Breadcrumbs ---
+.q-breadcrumbs {
+  font-size: 14px;
+  color: var(--r2-text-secondary);
+
+  a,
+  .q-breadcrumbs__el {
+    color: var(--r2-text-secondary);
+    transition: color 0.15s ease;
+  }
+  a:hover,
+  .q-breadcrumbs__el:hover {
+    color: var(--r2-text);
+  }
+}
+
+// --- Sidebar buttons (LeftSidebar) ---
+.q-drawer .q-btn--stack {
+  font-size: 11px;
+  letter-spacing: 0;
+  background-color: var(--r2-bg);
+  color: var(--r2-text) !important;
+  border: 1px solid var(--r2-border);
+  box-shadow: none !important;
+  text-shadow: none !important;
+
+  &:hover {
+    border-color: var(--r2-border-strong);
+    background-color: var(--r2-bg-hover);
+  }
+
+  // Stack icons no longer get coloured backgrounds — keep them mono
+  .q-icon {
+    color: var(--r2-text);
+  }
+}
+
+// Restore some accent for the "New" CTA
+.q-drawer .q-btn--stack.bg-green,
+.q-drawer .q-btn--stack.bg-primary {
+  background-color: var(--r2-text) !important;
+  color: var(--r2-bg) !important;
+  border-color: var(--r2-text);
+
+  .q-icon {
+    color: var(--r2-bg);
+  }
+}
+
+.q-drawer .q-btn--stack.bg-red {
+  background-color: #fff5f5 !important;
+  color: #c00 !important;
+  border-color: #fcc;
+  .q-icon {
+    color: #c00;
+  }
+}
+
+// --- GitHub-style markdown rendering ---
+.markdown {
+  color: var(--r2-text);
+  line-height: 1.7;
+  font-size: 15px;
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    margin-top: 1.6em;
+    margin-bottom: 0.6em;
+    font-weight: 600;
+    line-height: 1.25;
+    letter-spacing: -0.01em;
+  }
+  h1 {
+    font-size: 2em;
+    padding-bottom: 0.3em;
+    border-bottom: 1px solid var(--r2-border);
+  }
+  h2 {
+    font-size: 1.5em;
+    padding-bottom: 0.3em;
+    border-bottom: 1px solid var(--r2-border);
+  }
+  h3 {
+    font-size: 1.25em;
+  }
+  h4 {
+    font-size: 1em;
+  }
+
+  p {
+    margin: 0 0 1em;
+  }
+
+  a {
+    color: var(--r2-accent);
+    text-decoration: none;
+  }
+  a:hover {
+    text-decoration: underline;
+  }
+
+  blockquote {
+    margin: 0 0 1em;
+    padding: 0 1em;
+    color: var(--r2-text-secondary);
+    border-left: 3px solid var(--r2-border-strong);
+  }
+
+  ul,
+  ol {
+    margin: 0 0 1em;
+    padding-left: 2em;
+  }
+  li + li {
+    margin-top: 0.25em;
+  }
+
+  code {
+    background-color: var(--r2-bg-subtle);
+    padding: 0.2em 0.4em;
+    border-radius: 4px;
+    font-family: "SFMono-Regular", "JetBrains Mono", Consolas, monospace;
+    font-size: 0.9em;
+  }
+
+  pre {
+    background-color: #0a0a0a;
+    color: #f5f5f5;
+    padding: 1em 1.25em;
+    border-radius: var(--r2-radius);
+    overflow-x: auto;
+    margin: 0 0 1em;
+    line-height: 1.55;
+    font-family: "SFMono-Regular", "JetBrains Mono", Consolas, monospace;
+  }
+  pre code {
+    background: transparent;
+    color: inherit;
+    padding: 0;
+    border-radius: 0;
+  }
+
+  img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 4px;
+  }
+
+  table {
+    border-collapse: collapse;
+    margin: 0 0 1em;
+    width: 100%;
+
+    th,
+    td {
+      border: 1px solid var(--r2-border);
+      padding: 8px 12px;
+      text-align: left;
+    }
+    th {
+      background-color: var(--r2-bg-subtle);
+      font-weight: 600;
+    }
+    tr:nth-child(2n) td {
+      background-color: var(--r2-bg-muted);
+    }
+  }
+
+  hr {
+    border: 0;
+    height: 1px;
+    background-color: var(--r2-border);
+    margin: 1.5em 0;
   }
 }

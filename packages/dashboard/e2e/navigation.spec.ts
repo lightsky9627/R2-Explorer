@@ -68,26 +68,26 @@ test.describe("Sidebar", () => {
 	test("opens info dialog", async ({ page }) => {
 		await page.goto(`/${BUCKET}/files`);
 
-		await page.getByRole("button", { name: "Info" }).click();
+		await page.getByRole("button", { name: "关于" }).click();
 
 		// Info dialog should show version and config
 		await expect(
-			page.locator("text=Thank you for using R2-Explorer"),
+			page.locator("text=感谢使用 R2-Explorer"),
 		).toBeVisible({ timeout: 5_000 });
-		await expect(page.locator("text=Server Configuration")).toBeVisible();
+		await expect(page.locator("text=服务器配置")).toBeVisible();
 	});
 
 	test("closes info dialog with OK", async ({ page }) => {
 		await page.goto(`/${BUCKET}/files`);
-		await page.getByRole("button", { name: "Info" }).click();
+		await page.getByRole("button", { name: "关于" }).click();
 		await expect(
-			page.locator("text=Thank you for using R2-Explorer"),
+			page.locator("text=感谢使用 R2-Explorer"),
 		).toBeVisible({ timeout: 5_000 });
 
-		await page.getByRole("button", { name: "OK" }).click();
+		await page.getByRole("button", { name: "确定" }).click();
 
 		await expect(
-			page.locator("text=Thank you for using R2-Explorer"),
+			page.locator("text=感谢使用 R2-Explorer"),
 		).not.toBeVisible({ timeout: 3_000 });
 	});
 });
