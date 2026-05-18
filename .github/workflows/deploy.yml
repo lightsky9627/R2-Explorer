@@ -25,8 +25,14 @@ jobs:
           R2EXPLORER_DOMAIN: ${{ vars.R2EXPLORER_DOMAIN }}
           CF_API_TOKEN: ${{ secrets.CF_API_TOKEN }}
         run: node packages/github-action/prepareDeploy.js
-      - name: Get latest version
-        run: cd packages/github-action && npm install && npm install --save r2-explorer@latest
+      - name: Install pnpm
+        run: npm install -g pnpm@9
+      - name: Install workspace dependencies
+        run: pnpm install --frozen-lockfile
+      - name: Build dashboard and worker from local source
+        run: pnpm build
+      - name: Install local r2-explorer into deploy folder
+        run: cd packages/github-action && npm install && npm install --save file:../worker
       - name: Deploy
         uses: cloudflare/wrangler-action@v4
         with:
