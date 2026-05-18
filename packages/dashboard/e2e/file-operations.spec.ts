@@ -36,7 +36,7 @@ test.describe("File operations", () => {
 			await expect(page.locator(".q-table")).toBeVisible({ timeout: 10_000 });
 
 			await page.getByRole("button", { name: "新建" }).click();
-			await page.getByText("新建文件").click();
+			await page.getByText("新建文件", { exact: true }).click();
 
 			await page.locator(".q-dialog input").fill("e2e-new-file.txt");
 			await page.getByRole("button", { name: "创建" }).click();
